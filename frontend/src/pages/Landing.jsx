@@ -26,7 +26,7 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: kolipakamahendra1-wq/ai-code-review-bot@v1
+      - uses: kolipakamahendra1-wq/AI-code-review-Bot@v1
         with:
           fail-on: high
         env:

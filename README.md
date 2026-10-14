@@ -1,6 +1,6 @@
 # PR Sentinel — AI Code Review Bot
 
-[![CI](https://github.com/kolipakamahendra1-wq/ai-code-review-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/kolipakamahendra1-wq/ai-code-review-bot/actions/workflows/ci.yml)
+[![CI](https://github.com/kolipakamahendra1-wq/AI-code-review-Bot/actions/workflows/ci.yml/badge.svg)](https://github.com/kolipakamahendra1-wq/AI-code-review-Bot/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.12-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-009688) ![React](https://img.shields.io/badge/React-19-61dafb) ![License](https://img.shields.io/badge/license-MIT-green)
 
 A GitHub bot that reviews every pull request automatically. It reads the diff, comments on the **exact changed line**, explains the risk, suggests a fix, and gives the PR a score. It combines a **deterministic security rule engine** with an **LLM** (free local Ollama by default; OpenAI or Claude by config).
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: { pull-requests: write, contents: read }
     steps:
-      - uses: kolipakamahendra1-wq/ai-code-review-bot@v1
+      - uses: kolipakamahendra1-wq/AI-code-review-Bot@v1
         with:
           provider: openai     # ollama | openai | anthropic | rules
           fail-on: high        # fail the check on high/critical findings

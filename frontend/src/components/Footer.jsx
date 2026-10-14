@@ -7,7 +7,7 @@ export default function Footer() {
         <span>PR Sentinel: built with FastAPI, React, Ollama and GitHub Actions</span>
         <span className="flex gap-4">
           <Link to="/docs" className="hover:text-white">Docs</Link>
-          <a href="https://github.com/kolipakamahendra1-wq/ai-code-review-bot" className="hover:text-white">GitHub</a>
+          <a href="https://github.com/kolipakamahendra1-wq/AI-code-review-Bot" className="hover:text-white">GitHub</a>
         </span>
       </div>
     </footer>

@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: { pull-requests: write, contents: read }
     steps:
-      - uses: kolipakamahendra1-wq/ai-code-review-bot@v1
+      - uses: kolipakamahendra1-wq/AI-code-review-Bot@v1
         with:
           provider: openai        # or anthropic, ollama
           fail-on: high
