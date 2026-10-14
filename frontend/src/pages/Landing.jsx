@@ -10,13 +10,13 @@ const diff = [
 const pipeline = [
   ["A pull request is opened", "GitHub sends a signed webhook. The bot verifies the HMAC signature before doing anything."],
   ["The diff is parsed", "Each file is split into hunks, and every changed line gets its real line number. Lockfiles and binaries are skipped."],
-  ["Rules and a model both read it", "Twelve deterministic security rules run instantly. A local model adds the judgment calls rules can't make."],
+  ["Rules and a model both read it", "Twelve deterministic rules run instantly. A local model adds the judgment calls rules can't make."],
   ["Comments land on the exact line", "Findings are checked against the diff so GitHub accepts them, then posted as one review with a score."],
 ];
 
 const features = [
-  ["Runs on your own machine", "The default model is Ollama qwen2.5:3b. No API key, no per-review bill, and your code never leaves your network. Switch to OpenAI or Claude with one environment variable."],
-  ["Never misses the obvious", "Rules for hardcoded secrets, SQL injection, eval, shell=True and disabled TLS run on every change, so a small model's bad day can't let them through."],
+  ["Free to run on your own machine", "The default model is Ollama qwen2.5:3b. No account, no API key, no per-review bill, and your code never leaves your network. Switch to OpenAI or Claude with one environment variable."],
+  ["Catches the obvious first", "Rules for hardcoded secrets, SQL injection, eval, shell=True and disabled TLS run on every change, so a small model's bad day can't let them slip by."],
   ["Safe to leave on", "Reviews are idempotent per commit, drafts are skipped, and a failed review is recorded instead of crashing the worker."],
   ["Works as a webhook or an Action", "Host the FastAPI service, or drop one workflow file into any repo and gate merges with --fail-on high."],
 ];
@@ -43,8 +43,7 @@ export default function Landing() {
               Catch the bug before your teammate has to.
             </h1>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
-              PR Sentinel reviews every pull request the moment it opens. It comments on the exact line, explains the
-              risk, and suggests the fix.
+              Reviews every pull request the moment it opens, comments on the exact line, and suggests the fix.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link to="/playground" className="rounded-lg bg-accent px-5 py-3 font-medium text-ink hover:brightness-110">
@@ -54,7 +53,6 @@ export default function Landing() {
                 Add it to a repo
               </Link>
             </div>
-            <p className="mt-5 text-sm text-muted">Free to run. No account, no API key.</p>
           </div>
 
           <div className="overflow-hidden rounded-xl border border-line bg-panel shadow-2xl shadow-black/40" aria-label="Example review">

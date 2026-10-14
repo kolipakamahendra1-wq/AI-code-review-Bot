@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import { ShieldCheck } from "@phosphor-icons/react";
 
 const link = ({ isActive }) =>
   `rounded-md px-3 py-1.5 text-sm transition-colors ${
@@ -8,9 +9,7 @@ const link = ({ isActive }) =>
 export function Logo() {
   return (
     <span className="grid size-6 place-items-center rounded-md bg-accent text-ink">
-      <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 12.5l4.5 4.5L19 7" />
-      </svg>
+      <ShieldCheck size={16} weight="bold" />
     </span>
   );
 }
@@ -26,9 +25,6 @@ export default function Nav() {
           <NavLink to="/playground" className={link}>Playground</NavLink>
           <NavLink to="/dashboard" className={link}>Dashboard</NavLink>
           <NavLink to="/docs" className={link}>Docs</NavLink>
-          <Link to="/playground" className="ml-2 hidden rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-ink hover:brightness-110 sm:block">
-            Try it free
-          </Link>
         </nav>
       </div>
     </header>

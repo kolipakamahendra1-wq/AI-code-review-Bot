@@ -7,7 +7,7 @@
   --color-panel: #13131c;
   --color-line: #262634;
   --color-muted: #8f8fa3;
-  --color-accent: #a78bfa;
+  --color-accent: #e9e9f1;
   --color-crit: #f87171;
   --color-high: #fb923c;
   --color-med: #fbbf24;
@@ -23,7 +23,7 @@ body {
 }
 
 .grid-bg {
-  background-image: radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.16), transparent 55%),
+  background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07), transparent 55%),
     linear-gradient(var(--color-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
   background-size: auto, 56px 56px, 56px 56px;

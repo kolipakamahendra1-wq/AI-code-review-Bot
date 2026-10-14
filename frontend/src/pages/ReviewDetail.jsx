@@ -25,9 +25,8 @@ export default function ReviewDetail() {
               <h1 className="text-2xl font-semibold tracking-tight">
                 {r.repo ? `${r.repo}#${r.pr_number}` : "Pasted diff"}
               </h1>
-              <p className="mt-1 text-muted">
-                {r.title && `${r.title} · `}{r.model} · {r.created_at}
-              </p>
+              {r.title && <p className="mt-1 text-muted">{r.title}</p>}
+              <p className="mt-1 text-sm text-muted">Reviewed by {r.model} on {r.created_at}</p>
             </div>
           </div>
           {r.status === "error" ? (
