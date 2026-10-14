@@ -8,7 +8,7 @@ import sys
 
 from . import config
 from .github import GitHubClient
-from .llm import LLMError, get_client
+from .llm import get_client
 from .pipeline import review_pull_request
 from .reviewer import SEVERITIES
 
@@ -42,7 +42,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         res = review_pull_request(repo, number, get_client(), GitHubClient(),
                                   post=not args.no_post, source="action", force=True)
-    except (LLMError, Exception) as e:  # noqa: BLE001 - CLI boundary
+    except Exception as e:  # CLI boundary: report and exit non-zero
         print(f"error: {e}", file=sys.stderr)
         return 2
     print(f"score {res['score']}/100 - {len(res['findings'])} finding(s) - model {res['model']}")

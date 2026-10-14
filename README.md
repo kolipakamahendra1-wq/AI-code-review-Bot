@@ -43,7 +43,7 @@ GitHub PR event ──► POST /api/webhooks/github  (HMAC verified, background 
 cd backend
 python -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-pytest -q                                          # 25 tests, no network or model needed
+pytest -q                                          # 27 tests, no network or model needed
 uvicorn app.main:app --port 8020
 
 # frontend

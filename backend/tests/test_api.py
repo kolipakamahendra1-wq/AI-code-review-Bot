@@ -134,3 +134,26 @@ def test_rules_mode_needs_no_model(sample_diff, monkeypatch):
     assert body["model"] == "rules-only"
     assert {"Possible SQL injection", "Hardcoded secret"} <= {f["title"] for f in body["findings"]}
     assert c.post("/api/review/diff", json={"diff": sample_diff, "mode": "x"}).status_code == 422
+
+
+def test_cli_fail_on_gates_by_severity(sample_diff, monkeypatch, tmp_path, capsys):
+    from app import cli
+    monkeypatch.setattr(cli, "GitHubClient", lambda: StubGH(sample_diff))
+    monkeypatch.setattr(cli, "get_client", lambda: FakeClient(GOOD))
+    base = ["review", "--repo", "o/r", "--pr", "3", "--no-post", "--db", str(tmp_path / "cli.db")]
+    assert cli.main(base + ["--fail-on", "high"]) == 1   # GOOD has a high finding
+    assert cli.main(base + ["--fail-on", "critical"]) == 0
+    assert "SQLi" in capsys.readouterr().out
+
+
+def test_cli_returns_2_on_failure(monkeypatch, tmp_path, capsys):
+    from app import cli
+
+    class Broken(StubGH):
+        def get_pr(self, repo, number):
+            raise RuntimeError("boom")
+
+    monkeypatch.setattr(cli, "GitHubClient", lambda: Broken(""))
+    monkeypatch.setattr(cli, "get_client", lambda: FakeClient(GOOD))
+    assert cli.main(["review", "--repo", "o/r", "--pr", "1", "--db", str(tmp_path / "c.db")]) == 2
+    assert "boom" in capsys.readouterr().err
