@@ -1,0 +1,30 @@
+name: PR Sentinel review
+# Dogfooding: the bot reviews its own pull requests.
+# Uses the instant rule engine so it needs no API key. To add the model, set
+# LLM_PROVIDER/OPENAI_API_KEY in repo secrets and drop ENABLE_RULES override.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install httpx pydantic
+      - name: Review
+        working-directory: backend
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_PROVIDER: ${{ secrets.OPENAI_API_KEY && 'openai' || 'rules' }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DB_PATH: ${{ runner.temp }}/review.db
+        run: python -m app.cli review

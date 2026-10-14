@@ -1,0 +1,23 @@
+# Ollama runs on the host (it needs your models and ideally your GPU).
+services:
+  api:
+    build: ./backend
+    ports: ["8020:8020"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      OLLAMA_URL: http://host.docker.internal:11434
+      FRONTEND_ORIGIN: http://localhost:8080
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    volumes: ["sentinel-data:/data"]
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8020
+    ports: ["8080:80"]
+    depends_on: [api]
+
+volumes:
+  sentinel-data:

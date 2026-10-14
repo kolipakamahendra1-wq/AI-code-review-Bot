@@ -1,0 +1,49 @@
+name: PR Sentinel
+description: AI code review for pull requests. Inline comments, a security rule engine, and a local or cloud LLM.
+author: kolipakamahendra1-wq
+branding:
+  icon: check-circle
+  color: purple
+
+inputs:
+  provider:
+    description: LLM provider (ollama, openai, anthropic, or rules for no model)
+    default: ollama
+  model:
+    description: Model name for the chosen provider (optional)
+    default: ""
+  fail-on:
+    description: Fail the job if a finding at or above this severity exists (info, low, medium, high, critical). Empty = never fail.
+    default: ""
+  post:
+    description: Post the review as PR comments ("false" prints only)
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install dependencies
+      shell: bash
+      run: pip install --quiet httpx pydantic
+    - name: Review pull request
+      shell: bash
+      working-directory: ${{ github.action_path }}/backend
+      env:
+        LLM_PROVIDER: ${{ inputs.provider }}
+        INPUT_MODEL: ${{ inputs.model }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_POST: ${{ inputs.post }}
+        DB_PATH: ${{ runner.temp }}/pr-sentinel.db
+      run: |
+        case "$LLM_PROVIDER" in
+          openai) [ -n "$INPUT_MODEL" ] && export OPENAI_MODEL="$INPUT_MODEL" ;;
+          anthropic) [ -n "$INPUT_MODEL" ] && export ANTHROPIC_MODEL="$INPUT_MODEL" ;;
+          *) [ -n "$INPUT_MODEL" ] && export CHAT_MODEL="$INPUT_MODEL" ;;
+        esac
+        args=(review)
+        [ -n "$INPUT_FAIL_ON" ] && args+=(--fail-on "$INPUT_FAIL_ON")
+        [ "$INPUT_POST" = "false" ] && args+=(--no-post)
+        python -m app.cli "${args[@]}"
