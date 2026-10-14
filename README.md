@@ -7,6 +7,8 @@ A GitHub bot that reviews every pull request automatically. It reads the diff, c
 
 Ships as a **webhook service** (FastAPI), a **reusable GitHub Action**, and a **web dashboard + playground** (React).
 
+![PR Sentinel](docs/social-preview.png)
+
 ![Landing page](docs/landing.png)
 
 ## Why it's more than "send the diff to GPT"
